@@ -39,7 +39,7 @@ It’s built with Node.js, Express, and TypeScript for scalability, maintainabil
 - Modular architecture for easy maintenance and feature growth
 - Payment integration with Vipps
 - Secure API endpoints with input validation and error handling
-- Dockerized container
+- Dockerized deployment
 
 ---
 
