@@ -85,6 +85,7 @@ npm run start
 ---
 
 ## Project Structure
+``` plaintext
 /
 ├── src/
 │   ├── config/           # Environment, logging, and DB config
@@ -102,6 +103,7 @@ npm run start
 ├── tsconfig.json
 ├── package.json
 └── README.md
+```
 
 ---
 
