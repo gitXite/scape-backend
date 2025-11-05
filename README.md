@@ -47,7 +47,7 @@ It’s built with Node.js, Express, and TypeScript for scalability, maintainabil
 - Language: TypeScript
 - Runtime: Node.js
 - Framework: Express
-- Validation: Zod / Joi
+- Validation: Zod
 - Linting / Formatting: ESLint / Prettier
 - Testing: Jest
 
