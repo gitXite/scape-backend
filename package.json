@@ -33,5 +33,9 @@
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@types/nodemailer": "^7.0.3",
+    "nodemailer": "^7.0.10"
   }
 }
