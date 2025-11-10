@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import { loadTemplate } from './templateLoader.ts'; 
+import { loadTemplate } from '../utils/templateLoader.ts'; 
 
 dotenv.config();
 
