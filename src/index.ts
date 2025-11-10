@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import config from './config/config.ts';
+import connectDB from './config/db.ts';
 
 
 const app = express();
@@ -13,17 +13,15 @@ app.use(express.json());
 
 
 async function startServer() {
-    const uri = config.mongoDBUri;
-
     try {
-        await mongoose.connect(uri);
+        await connectDB();
 
-        console.log('Connected to MongoDB Atlas with mongoose');
         app.listen(config.port, () => {
             console.log(`Server running on port ${config.port}`);
         });
     } catch (err) {
-        console.error("Error connecting to MongoDB: ", err);
+        console.error("Failed to start the server: ", err);
+        process.exit(1);
     }
 }
 
