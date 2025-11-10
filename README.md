@@ -92,7 +92,9 @@ npm run start
 │   ├── controllers/      # Route handlers
 │   ├── middlewares/      # Custom Express middleware
 │   ├── routes/           # API route definitions
+│   ├── templates/        # HTML templates for emails
 │   ├── services/         # Business logic
+|   ├── types/            # Reusable types
 │   ├── utils/            # Utility functions and helpers
 │   └── index.ts          # Express app setup & server entry point
 │
