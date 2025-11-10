@@ -1,6 +1,6 @@
 export type STLParams = {
-    north: number,
-    west: number,
+    lat: number,
+    lng: number,
     verticalScale: number,
     scale: number,
 };

@@ -1,0 +1,39 @@
+import type { STLParams } from '../types/index.ts';
+import  config  from '../config/config.ts';
+
+const terrainServiceUrl = config.terrainServiceUrl;
+
+export const generateSTL = async (params: STLParams): Promise<Buffer> => {
+    const { lat, lng, verticalScale, scale } = params;
+
+    try {
+        const response = await fetch(`${terrainServiceUrl}/generate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Api-Key': config.terrainApiKey,
+            },
+            body: JSON.stringify({
+                lat,
+                lng,
+                verticalScale,
+                scale,
+            }),
+        });
+
+        if (!response.ok) {
+            const text = await response.text();
+            throw new Error(`Microservice error: ${text}`);
+        }
+
+        const buffer = Buffer.from(await response.arrayBuffer());
+        return buffer;
+    } catch (err) {
+        if (err instanceof Error) {
+            console.error('Error getting STL file: ', err.message);
+        } else {
+            console.error('Unknown error: ', err);
+        }
+        throw err;
+    }
+}
