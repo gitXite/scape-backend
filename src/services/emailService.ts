@@ -10,6 +10,7 @@ interface MailOptions {
     text: string;
     html?: string;
     replyTo?: string;
+    attachments?: any[],
 }
 
 const transporter = nodemailer.createTransport({
@@ -25,11 +26,6 @@ const transporter = nodemailer.createTransport({
 export async function sendMail(mailOptions: MailOptions) {
     const {
         from = `${process.env.MAIL_SENDER_NAME || 'SCAPE by md'} <${process.env.MAIL_USERNAME}>`,
-        to,
-        subject, 
-        text,
-        html,
-        replyTo
     } = mailOptions;
 
     try {
