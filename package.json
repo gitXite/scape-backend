@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/gitXite/scape-backend#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
     "dotenv": "^17.2.3",
@@ -36,6 +37,7 @@
   },
   "dependencies": {
     "@types/nodemailer": "^7.0.3",
+    "cors": "^2.8.5",
     "nodemailer": "^7.0.10"
   }
 }
