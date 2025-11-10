@@ -38,6 +38,7 @@
   "dependencies": {
     "@types/nodemailer": "^7.0.3",
     "cors": "^2.8.5",
+    "mongoose": "^8.19.3",
     "nodemailer": "^7.0.10"
   }
 }
