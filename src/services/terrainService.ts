@@ -1,13 +1,12 @@
 import type { STLParams } from '../types/index.ts';
 import  config  from '../config/config.ts';
 
-const terrainServiceUrl = config.terrainServiceUrl;
 
 export const generateSTL = async (params: STLParams): Promise<Buffer> => {
     const { lat, lng, verticalScale, scale } = params;
 
     try {
-        const response = await fetch(`${terrainServiceUrl}/generate`, {
+        const response = await fetch(`${config.terrainServiceUrl}/generate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +29,7 @@ export const generateSTL = async (params: STLParams): Promise<Buffer> => {
         return buffer;
     } catch (err) {
         if (err instanceof Error) {
-            console.error('Error getting STL file: ', err.message);
+            console.error('Error generating STL file: ', err.message);
         } else {
             console.error('Unknown error: ', err);
         }

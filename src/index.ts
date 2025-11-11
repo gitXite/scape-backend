@@ -3,7 +3,7 @@ import cors from 'cors';
 import config from './config/config.ts';
 import connectDB from './config/db.ts';
 
-import { router as microServiceRoutes }  from './routes/microservice.ts';
+import { router as microserviceRoutes }  from './routes/microservice.ts';
 
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(cors({
 app.use(express.json());
 
 
-app.use('/api/stl', microServiceRoutes);
+app.use('/api/stl', microserviceRoutes);
 
 
 async function startServer() {
