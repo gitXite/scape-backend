@@ -1,4 +1,5 @@
-import { storeFeedback, calculateAverageRating, getReviewCount } from '../services/feedbackService.ts';
+import { resolve } from 'path';
+import { storeFeedback, calculateAverageRating, getReviewCount, getReviewSamples } from '../services/feedbackService.ts';
 import type { Request, Response } from 'express';
 
 
@@ -36,3 +37,12 @@ export const getReviewStats = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal server error: ', error: err });
     }
 };
+
+export const getReviews = async (req: Request, res: Response) => {
+    try {
+        const result = await getReviewSamples();
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error: ', error: err });
+    }
+}

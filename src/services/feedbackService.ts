@@ -59,3 +59,28 @@ export async function calculateAverageRating() {
         throw err;
     }
 }
+
+export async function getReviewSamples() {
+    let resultArray: any[] = [];
+    try {
+        const result = await Review.aggregate([
+            {
+                $sample: {
+                    size: 1
+                }
+            }
+        ]);
+
+        for (let i: number = 0; i < result.length; i++) {
+            resultArray.push(result[i]);
+        }
+        return resultArray;
+    } catch (err) {
+        if (err instanceof Error) {
+            console.error('Error getting sample reviews in database: ', err.message);
+        } else {
+            console.error('Unknown error: ', err);
+        }
+        throw err;
+    }
+}
