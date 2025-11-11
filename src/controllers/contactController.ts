@@ -1,5 +1,4 @@
 import type { Request, Response } from 'express';
-import config from '../config/config.ts';
 import { sendMail } from '../services/emailService.ts';
 
 export const sendContactEmail = async (req: Request, res: Response) => {
