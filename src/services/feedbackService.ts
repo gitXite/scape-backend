@@ -1,4 +1,4 @@
-import Review from '@/models/Review.ts';
+import Review from '../models/Review.ts';
 
 
 export async function storeFeedback(rating: number, message: string, orderID: string) {

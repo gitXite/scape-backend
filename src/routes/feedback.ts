@@ -1,4 +1,4 @@
-import { submitReview } from '@/controllers/feedbackController.ts';
+import { submitReview } from '../controllers/feedbackController.ts';
 import { Router } from 'express';
 
 export const router = Router();
