@@ -66,7 +66,7 @@ export async function getReviewSamples() {
         const result = await Review.aggregate([
             {
                 $sample: {
-                    size: 1
+                    size: 20
                 }
             }
         ]);
