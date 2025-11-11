@@ -11,6 +11,6 @@ export const downloadSTL = async (req: Request, res: Response) => {
         res.status(200).send(stlBuffer);
     } catch (err) {
         console.error('Error generating stl: ', err);
-        res.status(500).send('Failed to generate stl file');
+        res.status(500).json({ message: 'Failed to generate stl file' });
     }
 }
