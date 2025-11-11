@@ -4,6 +4,7 @@ import config from './config/config.ts';
 import connectDB from './config/db.ts';
 
 import { router as microserviceRoutes }  from './routes/microservice.ts';
+import { loggerMiddleware } from './middleware/loggerMiddleware.ts';
 
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors({
     origin: config.frontendUrl,
 }));
 app.use(express.json());
+app.use(loggerMiddleware);
 
 
 app.use('/api/stl', microserviceRoutes);
