@@ -4,10 +4,13 @@ import Review from '../models/Review.ts';
 
 export async function storeFeedback(rating: number, message: string, orderID: string) {
     try {
+        const query = await Review.find({ orderID: orderID }).exec();
+        
         const review = await Review.create({
             orderID: orderID,
             message: message,
             rating: rating,
+            validated: query ? true : false,
         });
 
         console.log('Review stored in database: ', review);
@@ -64,7 +67,7 @@ export async function getReviewSamples() {
     let resultArray: any[] = [];
     try {
         const result = await Review.aggregate([
-            { $match: { message: { $exists: true, $ne: '' } } },
+            { $match: { message: { $exists: true, $ne: '' }, validated: true } },
             { $sample: { size: 20 }} 
         ]);
 

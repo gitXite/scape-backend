@@ -5,6 +5,7 @@ const reviewSchema = new Schema({
         orderID: String,
         rating: Number,
         message: String,
+        validated: Boolean,
     }, {
         timestamps: true,
     }
