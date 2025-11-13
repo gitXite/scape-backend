@@ -1,16 +1,17 @@
 import { error } from 'console';
-import Review from '../models/Review.ts';
+import Reviews from '../models/Review.ts';
+import Orders from '../models/Orders.ts';
 
 
 export async function storeFeedback(rating: number, message: string, orderID: string) {
     try {
-        const query = await Review.find({ orderID: orderID }).exec();
+        const order = await Orders.findOne({ orderID }).exec();
         
-        const review = await Review.create({
+        const review = await Reviews.create({
             orderID: orderID,
             message: message,
             rating: rating,
-            validated: query ? true : false,
+            validated: !!order,
         });
 
         console.log('Review stored in database: ', review);
@@ -27,7 +28,7 @@ export async function storeFeedback(rating: number, message: string, orderID: st
 
 export async function getReviewCount() {
     try {
-        const count = await Review.countDocuments();
+        const count = await Reviews.countDocuments();
         return count;
     } catch (err) {
         if (err instanceof Error) {
@@ -41,7 +42,7 @@ export async function getReviewCount() {
 
 export async function calculateAverageRating() {
     try {
-        const result = await Review.aggregate([
+        const result = await Reviews.aggregate([
             {
                 $group: {
                     _id: null, // group together
@@ -66,7 +67,7 @@ export async function calculateAverageRating() {
 export async function getReviewSamples() {
     let resultArray: any[] = [];
     try {
-        const result = await Review.aggregate([
+        const result = await Reviews.aggregate([
             { $match: { message: { $exists: true, $ne: '' }, validated: true } },
             { $sample: { size: 20 }} 
         ]);
