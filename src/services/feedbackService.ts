@@ -68,7 +68,7 @@ export async function getReviewSamples() {
     let resultArray: any[] = [];
     try {
         const result = await Reviews.aggregate([
-            { $match: { message: { $exists: true, $ne: '' }, validated: true } },
+            { $match: { message: { $exists: true, $ne: '' }, validated: true, rating: { $gt: 3 } } },
             { $sample: { size: 20 }} 
         ]);
 
