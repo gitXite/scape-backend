@@ -1,5 +1,8 @@
 import type { Request, Response } from 'express';
 import { sendMail } from '../services/emailService.ts';
+import { autoReply } from '../services/contactService.ts';
+import { generateCaseID } from '../utils/generateCaseID.ts';
+
 
 export const sendContactEmail = async (req: Request, res: Response) => {
     const { name, email, orderID, content, honey } = req.body;
@@ -10,15 +13,16 @@ export const sendContactEmail = async (req: Request, res: Response) => {
         return res.status(403).json({ message: 'Bot detected' });
     }
 
+    const caseID = generateCaseID();
     try {
         await sendMail({
-            from: '',
             to: 'scapebymd@gmail.com',
             replyTo: email,
-            subject: `${name} - ${orderID}`,
+            subject: `${name} - ${caseID} - ${orderID || 'null'}`,
             text: content,
         });
         res.status(200).json({ message: 'Email sent successfully' });
+        autoReply(email, caseID);
     } catch (err) {
         res.status(500).json({ message: 'Failed to submit form, please try again', error: err });
     }

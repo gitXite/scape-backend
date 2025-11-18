@@ -5,7 +5,7 @@ import { loadTemplate } from '../utils/templateLoader.ts';
 dotenv.config();
 
 interface MailOptions {
-    from: string;
+    from?: string;
     to: string;
     replyTo?: string;
     subject: string;
@@ -28,12 +28,16 @@ const transporter = nodemailer.createTransport({
 
 export async function sendMail(mailOptions: MailOptions) {
     const {
-        from = `${process.env.MAIL_SENDER_NAME || 'SCAPE by md'} <${process.env.MAIL_USERNAME}>`,
-        html = mailOptions.template ? loadTemplate(mailOptions.template, mailOptions.templateVars) : mailOptions.html
+        from = mailOptions.from ?? `"SCAPE by md" <${process.env.MAIL_USERNAME}>`,
+        html = mailOptions.html ?? (mailOptions.template ? loadTemplate(mailOptions.template, mailOptions.templateVars) : undefined),
     } = mailOptions;
 
     try {
-        const info = await transporter.sendMail(mailOptions);
+        const info = await transporter.sendMail({
+            ...mailOptions,
+            from,
+            html,
+        });
 
         console.log(`Email sent successfully: ${info.messageId}`);
     } catch (err) {

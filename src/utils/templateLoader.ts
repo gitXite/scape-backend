@@ -5,7 +5,7 @@ export function loadTemplate(
     templateName: string, 
     variables?: Record<string, string>
 ): string {
-    const templatePath = path.resolve(__dirname, '../templates', `${templateName}.html`);
+    const templatePath = path.join(process.cwd(), 'src', 'templates', `${templateName}.html`);
     let content = fs.readFileSync(templatePath, 'utf-8');
 
     if (variables) {
