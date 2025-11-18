@@ -20,7 +20,7 @@ export const sendSTL = async (req: Request, res: Response) => {
 
         await sendMail({
             to: 'scapebymd@gmail.com',
-            subject: `ORDER PLACED: ${orderID}`,
+            subject: `ORDER PLACED # ${orderID}`,
             text: `Name: ${name} Email: ${email}`,
             template: 'stlFileEmail',
             templateVars: {
