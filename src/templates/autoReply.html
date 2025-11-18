@@ -35,7 +35,7 @@
                                 font-weight: 600;
                             "
                         >
-                            New Order Received # {{ORDER_ID}}
+                            Thank You for Contacting Us
                         </h2>
                     </td>
                 </tr>
@@ -49,7 +49,7 @@
                                 margin: 0 0 16px;
                             "
                         >
-                            A new order has been placed. 
+                            Hello,
                         </p>
 
                         <p
@@ -59,56 +59,80 @@
                                 margin: 0 0 16px;
                             "
                         >
-                            A new STL file has been generated and attached to
-                            this email. Here are the order details:
+                            This is an automatic confirmation that we’ve
+                            received your message. One of our team members will
+                            review your request and get back to you as soon as
+                            possible.
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 16px;
+                                color: #333;
+                                margin: 0 0 16px;
+                            "
+                        >
+                            Your case ID is:
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 20px;
+                                font-weight: bold;
+                                color: #000;
+                                margin: 0 0 24px;
+                            "
+                        >
+                            {{CASE_ID}}
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 16px;
+                                color: #333;
+                                margin: 0 0 24px;
+                            "
+                        >
+                            Please include this ID in any replies so we can
+                            assist you faster.
                         </p>
 
                         <table
-                            width="100%"
+                            border="0"
                             cellpadding="0"
                             cellspacing="0"
-                            border="0"
-                            style="margin: 20px 0; font-size: 16px; color: #333"
-                        >
-                            <tr>
-                                <td style="padding: 6px 0; font-weight: bold">
-                                    Order ID:
-                                </td>
-                                <td style="padding: 6px 0">{{ORDER_ID}}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 6px 0; font-weight: bold">
-                                    Customer Name:
-                                </td>
-                                <td style="padding: 6px 0">
-                                    {{CUSTOMER_NAME}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 6px 0; font-weight: bold">
-                                    Customer Email:
-                                </td>
-                                <td style="padding: 6px 0">
-                                    {{CUSTOMER_EMAIL}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 6px 0; font-weight: bold">
-                                    Date of Purchase:
-                                </td>
-                                <td style="padding: 6px 0">{{ORDER_DATE}}</td>
-                            </tr>
-                        </table>
-
-                        <p
                             style="
-                                font-size: 16px;
-                                color: #333;
-                                margin: 0 0 16px;
+                                margin: 0 auto 30px auto;
                             "
                         >
-                            The STL file is attached for processing.
-                        </p>
+                            <tr>
+                                <td
+                                    align="center"
+                                    style="
+                                        border-radius: 4px;
+                                        background-color: #222222;
+                                    "
+                                >
+                                    <a
+                                        href="https://www.scapebymd.no"
+                                        target="_blank"
+                                        style="
+                                            font-size: 16px;
+                                            font-family: Arial, sans-serif;
+                                            color: #ffffff;
+                                            text-decoration: none;
+                                            border-radius: 4px;
+                                            padding: 12px 25px;
+                                            border: 1px solid #222222;
+                                            display: inline-block;
+                                            font-weight: bold;
+                                        "
+                                    >
+                                        Visit Our Store
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
 
                         <hr
                             style="
@@ -118,16 +142,9 @@
                             "
                         />
 
-                        <p
-                            style="
-                                font-size: 14px;
-                                color: #666;
-                                margin: 0;
-                                text-align: center;
-                            "
-                        >
-                            Please process this order as soon as possible. This
-                            is an automated notification.
+                        <p style="font-size: 14px; color: #666; margin: 0; text-align: center;">
+                            If you didn’t send us a message, you can safely
+                            ignore this email.
                         </p>
                     </td>
                 </tr>

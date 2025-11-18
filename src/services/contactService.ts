@@ -6,7 +6,7 @@ export const autoReply = async (replyTo: string, caseID: string) => {
             to: replyTo,
             subject: `AUTOREPLY - ${caseID}`,
             text: 'Thank you for reaching out to us! We will reply shortly.',
-            template: 'contactEmail',
+            template: 'autoReply',
             templateVars: {
                 'CURRENT_YEAR': `${new Date().getFullYear()}`,
                 'CASE_ID': caseID,
