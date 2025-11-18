@@ -1,0 +1,69 @@
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5f5f5; padding:40px 0; font-family:Arial, sans-serif;">
+  <tr>
+    <td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+
+        <tr>
+          <td style="background:#222; padding:20px 30px; text-align:center;">
+            <h2 style="color:#ffffff; margin:0; font-size:22px; font-weight:600;">
+              New STL Order Received
+            </h2>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:30px;">
+            <p style="font-size:16px; color:#333; margin:0 0 16px;">
+              Hello Team,
+            </p>
+
+            <p style="font-size:16px; color:#333; margin:0 0 16px;">
+              A new STL file has been generated and attached to this email. Here are the order details:
+            </p>
+
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:20px 0; font-size:16px; color:#333;">
+              <tr>
+                <td style="padding:6px 0; font-weight:bold;">Order ID:</td>
+                <td style="padding:6px 0;">{{ORDER_ID}}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-weight:bold;">Customer Name:</td>
+                <td style="padding:6px 0;">{{CUSTOMER_NAME}}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-weight:bold;">Email:</td>
+                <td style="padding:6px 0;">{{CUSTOMER_EMAIL}}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-weight:bold;">Date:</td>
+                <td style="padding:6px 0;">{{ORDER_DATE}}</td>
+              </tr>
+            </table>
+
+            <p style="font-size:16px; color:#333; margin:0 0 16px;">
+              The STL file is attached for processing.
+            </p>
+
+            <hr style="border:0; border-top:1px solid #e5e5e5; margin:30px 0;">
+
+            <p style="font-size:14px; color:#666; margin:0;">
+              Please process this order as soon as possible. This is an automated notification.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="background:#fafafa; padding:20px 30px; text-align:center;">
+            <p style="font-size:13px; color:#888; margin:0;">
+              © {{CURRENT_YEAR}} SCAPE by md - All rights reserved.
+            </p>
+            <p style="font-size:13px; color:#888; margin:4px 0 0;">
+              This is an automated message, please do not reply directly to this email.
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
