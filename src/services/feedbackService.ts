@@ -25,7 +25,7 @@ export async function storeFeedback(rating: number, message: string, orderID: st
     }
 }
 
-export async function getReviewCount() {
+export async function getReviewCount(): number {
     try {
         const count = await Review.countDocuments();
         return count;
@@ -39,7 +39,7 @@ export async function getReviewCount() {
     }
 }
 
-export async function calculateAverageRating() {
+export async function calculateAverageRating(): number {
     try {
         const result = await Review.aggregate([
             {
@@ -63,7 +63,7 @@ export async function calculateAverageRating() {
     }
 }
 
-export async function getReviewSamples() {
+export async function getReviewSamples(): any[] {
     let resultArray: any[] = [];
     try {
         const result = await Review.aggregate([
