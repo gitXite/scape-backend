@@ -4,5 +4,5 @@ export function generateCaseID(): string {
     for (let i = 0; i < 6; i++) {
         id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return `CASE-${id}`;
+    return `CASE #${id}`;
 }
