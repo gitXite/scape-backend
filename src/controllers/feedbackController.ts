@@ -1,11 +1,16 @@
 import { storeFeedback, calculateAverageRating, getReviewCount, getReviewSamples } from '../services/feedbackService.ts';
 import type { Request, Response } from 'express';
 
+interface ReviewBody {
+    rating: number;
+    message: string;
+    orderID: string;
+}
 
-export const submitReview = async (req: Request, res: Response) => {
+export const submitReview = async (req: Request<{}, {}, ReviewBody>, res: Response) => {
     const { rating, message, orderID } = req.body;
     if (rating == null || !orderID) {
-        res.status(400).json({ message: 'Missing required fields' });
+        return res.status(400).json({ message: 'Missing required fields' });
     }
 
     try {
