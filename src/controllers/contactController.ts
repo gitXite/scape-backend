@@ -3,8 +3,15 @@ import { sendMail } from '../services/emailService.ts';
 import { autoReply } from '../services/contactService.ts';
 import { generateCaseID } from '../utils/generateCaseID.ts';
 
+interface ContactBody {
+    name: string;
+    email: string;
+    orderID: string;
+    content: string;
+    honey: string;
+}
 
-export const sendContactEmail = async (req: Request, res: Response) => {
+export const sendContactEmail = async (req: Request<{}, {}, ContactBody>, res: Response) => {
     const { name, email, orderID, content, honey } = req.body;
     if (!name || !email || !content) {
         return res.status(400).json({ message: 'Required fields must be filled out' });
