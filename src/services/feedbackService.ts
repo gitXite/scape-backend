@@ -1,13 +1,13 @@
 import { error } from 'console';
-import Reviews from '../models/Review.ts';
-import Orders from '../models/Orders.ts';
+import Review from '../models/Review.ts';
+import Order from '../models/Order.ts';
 
 
 export async function storeFeedback(rating: number, message: string, orderID: string) {
     try {
-        const order = await Orders.findOne({ orderID }).exec();
+        const order = await Order.findOne({ orderID }).exec();
         
-        const review = await Reviews.create({
+        const review = await Review.create({
             orderID: orderID,
             message: message,
             rating: rating,
@@ -28,7 +28,7 @@ export async function storeFeedback(rating: number, message: string, orderID: st
 
 export async function getReviewCount() {
     try {
-        const count = await Reviews.countDocuments();
+        const count = await Review.countDocuments();
         return count;
     } catch (err) {
         if (err instanceof Error) {
@@ -42,7 +42,7 @@ export async function getReviewCount() {
 
 export async function calculateAverageRating() {
     try {
-        const result = await Reviews.aggregate([
+        const result = await Review.aggregate([
             {
                 $group: {
                     _id: null, // group together
@@ -67,7 +67,7 @@ export async function calculateAverageRating() {
 export async function getReviewSamples() {
     let resultArray: any[] = [];
     try {
-        const result = await Reviews.aggregate([
+        const result = await Review.aggregate([
             { $match: { message: { $exists: true, $ne: '' }, validated: true, rating: { $gt: 3 } } },
             { $sample: { size: 20 }} 
         ]);

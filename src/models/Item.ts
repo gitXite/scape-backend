@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
-const itemsSchema = new Schema({
+const itemSchema = new Schema({
     type: {
         type: String,
         required: true,
@@ -27,5 +27,5 @@ const itemsSchema = new Schema({
     timestamps: true,
 });
 
-const Items = model('Items', itemsSchema);
-export default Items;
+const Item = model('Item', itemSchema);
+export default Item;
