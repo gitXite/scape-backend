@@ -1,8 +1,9 @@
 import type { Request, Response } from 'express';
 import { generateSTL } from '../services/terrainService.ts';
+import type { STLParams } from '../types/index.ts';
 
 
-export const downloadSTL = async (req: Request, res: Response) => {
+export const downloadSTL = async (req: Request<{}, {}, STLParams>, res: Response) => {
     try {
         const stlBuffer = await generateSTL(req.body);
 
