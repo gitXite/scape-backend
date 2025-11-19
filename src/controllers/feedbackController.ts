@@ -1,4 +1,3 @@
-import { resolve } from 'path';
 import { storeFeedback, calculateAverageRating, getReviewCount, getReviewSamples } from '../services/feedbackService.ts';
 import type { Request, Response } from 'express';
 

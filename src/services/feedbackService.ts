@@ -1,4 +1,3 @@
-import { error } from 'console';
 import Review from '../models/Review.ts';
 import Order from '../models/Order.ts';
 
