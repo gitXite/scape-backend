@@ -1,4 +1,4 @@
-import { storeFeedback, calculateAverageRating, getReviewCount, getReviewSamples } from '../services/feedbackService.ts';
+import { storeFeedback, calculateAverageRating, getReviewCount, getReviewSamples } from '../services/reviewService.ts';
 import type { Request, Response } from 'express';
 
 interface ReviewBody {
