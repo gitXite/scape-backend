@@ -7,6 +7,7 @@ import { router as microserviceRoutes }  from './routes/microservice.ts';
 import { router as contactRoutes } from './routes/contact.ts';
 import { router as reviewRoutes } from './routes/reviews.ts';
 import { loggerMiddleware } from './middleware/loggerMiddleware.ts';
+import { errorHandler } from './middleware/errorHandler.ts';
 
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/stl', microserviceRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/reviews', reviewRoutes);
 
+app.use(errorHandler);
 
 async function startServer() {
     try {
