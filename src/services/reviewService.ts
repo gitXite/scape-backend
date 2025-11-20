@@ -2,7 +2,7 @@ import Review from '../models/Review.ts';
 import Order from '../models/Order.ts';
 
 
-export async function storeFeedback(rating: number, message: string, orderID: string) {
+export async function storeReview(rating: number, message: string, orderID: string) {
     try {
         const order = await Order.findOne({ orderID }).exec();
         
