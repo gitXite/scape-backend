@@ -5,7 +5,7 @@ import connectDB from './config/db.ts';
 
 import { router as microserviceRoutes }  from './routes/microservice.ts';
 import { router as contactRoutes } from './routes/contact.ts';
-import { router as feedbackRoutes } from './routes/feedback.ts';
+import { router as reviewRoutes } from './routes/reviews.ts';
 import { loggerMiddleware } from './middleware/loggerMiddleware.ts';
 
 
@@ -20,7 +20,7 @@ app.use(loggerMiddleware);
 
 app.use('/api/stl', microserviceRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/feedback', feedbackRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 
 async function startServer() {
