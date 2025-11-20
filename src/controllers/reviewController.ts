@@ -1,4 +1,4 @@
-import { storeFeedback, calculateAverageRating, getReviewCount, getReviewSamples } from '../services/reviewService.ts';
+import { storeReview, calculateAverageRating, getReviewCount, getReviewSamples } from '../services/reviewService.ts';
 import type { Request, Response } from 'express';
 
 interface ReviewBody {
@@ -14,7 +14,7 @@ export const submitReview = async (req: Request<{}, {}, ReviewBody>, res: Respon
     }
 
     try {
-        const review = await storeFeedback(rating, message, orderID);
+        const review = await storeReview(rating, message, orderID);
         if (!review) {
             return res.status(400).json({ message: 'Failed to submit review' });
         }
