@@ -23,7 +23,7 @@ app.use(loggerMiddleware);
 app.use('/api/stl', microserviceRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/reviews', reviewRoutes);
-app.use('/api/order', )
+app.use('/api/order', orderRoutes);
 
 app.use(errorHandler);
 
