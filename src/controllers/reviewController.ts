@@ -21,7 +21,7 @@ export const submitReview = async (req: Request<{}, {}, ReviewBody>, res: Respon
 
         res.status(200).json({ message: 'Review successfully stored on database' });
     } catch (err) {
-        res.status(500).json({ message: 'Internal server error: ', error: err });
+        res.status(500).json({ message: 'Internal server error', error: err });
     }
 };
 
@@ -38,7 +38,7 @@ export const getReviewStats = async (req: Request, res: Response) => {
             }
         });
     } catch (err) {
-        res.status(500).json({ message: 'Internal server error: ', error: err });
+        res.status(500).json({ message: 'Internal server error', error: err });
     }
 };
 
@@ -47,6 +47,6 @@ export const getReviews = async (req: Request, res: Response) => {
         const result = await getReviewSamples();
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({ message: 'Internal server error: ', error: err });
+        res.status(500).json({ message: 'Internal server error', error: err });
     }
 }

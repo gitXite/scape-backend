@@ -17,7 +17,7 @@ export async function storeReview(rating: number, message: string, orderID: stri
         return review;
     } catch (err) {
         if (err instanceof Error) {
-            console.error('Database error:', err.message);
+            console.error('Error storing review in database:', err.message);
         } else {
             console.error('Unknown error:', err);
         }
@@ -31,7 +31,7 @@ export async function getReviewCount(): Promise<number> {
         return count;
     } catch (err) {
         if (err instanceof Error) {
-            console.error('Database error:', err.message);
+            console.error('Error fetching review count from database:', err.message);
         } else {
             console.error('Unknown error:', err);
         }
@@ -77,7 +77,7 @@ export async function getReviewSamples(): Promise<any[]> {
         return resultArray;
     } catch (err) {
         if (err instanceof Error) {
-            console.error('Databse error:', err.message);
+            console.error('Error fetching reviews from database:', err.message);
         } else {
             console.error('Unknown error:', err);
         }
