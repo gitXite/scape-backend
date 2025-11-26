@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { sendContactEmail } from '../controllers/contactController.ts';
+import { sendContactEmail } from '../controllers/contactController';
 
 export const router = Router();
 

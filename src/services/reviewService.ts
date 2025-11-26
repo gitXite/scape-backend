@@ -1,5 +1,5 @@
-import Review from '../models/Review.ts';
-import Order from '../models/Order.ts';
+import Review from '../models/Review';
+import Order from '../models/Order';
 
 
 export async function storeReview(rating: number, message: string, orderID: string) {

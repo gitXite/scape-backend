@@ -1,14 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import config from './config/config.ts';
-import connectDB from './config/db.ts';
+import config from './config/config';
+import connectDB from './config/db';
 
-import { router as microserviceRoutes }  from './routes/microservice.ts';
-import { router as contactRoutes } from './routes/contact.ts';
-import { router as reviewRoutes } from './routes/reviews.ts';
-import { router as orderRoutes } from './routes/orders.ts';
-import { loggerMiddleware } from './middleware/loggerMiddleware.ts';
-import { errorHandler } from './middleware/errorHandler.ts';
+import { router as microserviceRoutes }  from './routes/microservice';
+import { router as contactRoutes } from './routes/contact';
+import { router as reviewRoutes } from './routes/reviews';
+import { router as orderRoutes } from './routes/orders';
+import { loggerMiddleware } from './middleware/loggerMiddleware';
+import { errorHandler } from './middleware/errorHandler';
 
 
 const app = express();

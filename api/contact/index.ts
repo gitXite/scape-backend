@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sendContactEmail } from '../controllers/contactController.ts';
-import enableCors from '../utils/enableCors.ts';
+import { sendContactEmail } from '../../dist/controllers/contactController.js';
+import enableCors from '../../dist/utils/enableCors.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     enableCors(res);

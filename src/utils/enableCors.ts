@@ -1,5 +1,5 @@
 import type { VercelResponse } from '@vercel/node';
-import config from '../config/config.ts';
+import config from '../config/config';
 
 export default function enableCors(res: VercelResponse, origin = config.frontendUrl) {
     res.setHeader('Access-Control-Allow-Origin', origin);

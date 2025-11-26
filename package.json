@@ -4,6 +4,7 @@
   "description": "**Backend API repository** for **SCAPE by md**, a hybrid full-stack e-commerce service that prints, frames, and delivers beautiful, sentimental decoration pieces.",
   "main": "index.js",
   "scripts": {
+    "build": "tsc --build",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "seed": "ts-node src/seeder/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateSTL } from '../controllers/terrainController.ts';
-import enableCors from '../utils/enableCors.ts';
+import { generateSTL } from '../../dist/controllers/terrainController.js';
+import enableCors from '../../dist/utils/enableCors.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     enableCors(res);

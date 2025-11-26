@@ -1,7 +1,7 @@
 // seeder for 'scape' prod database
 import mongoose from 'mongoose';
-import config from '../config/config.ts';
-import Item from '../models/Item.ts';
+import config from '../config/config';
+import Item from '../models/Item';
 
 async function seed() {
     try {
