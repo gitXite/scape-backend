@@ -6,6 +6,7 @@ import {
 } from '../services/reviewService.ts';
 import { checkOrder } from '../services/orderService.ts';
 import type { Request, Response } from 'express';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 interface ReviewBody {
     rating: number;
@@ -14,10 +15,10 @@ interface ReviewBody {
 }
 
 export const submitReview = async (
-    req: Request<{}, {}, ReviewBody>,
-    res: Response
+    req: VercelRequest | Request,
+    res: VercelResponse | Response
 ) => {
-    const { rating, message, orderID } = req.body;
+    const { rating, message, orderID } = req.body as ReviewBody;
     if (rating == null || !orderID) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
@@ -40,7 +41,7 @@ export const submitReview = async (
     }
 };
 
-export const getReviewStats = async (req: Request, res: Response) => {
+export const getReviewStats = async (req: VercelRequest | Request, res: VercelResponse | Response) => {
     try {
         const averageRating = await calculateAverageRating();
         const totalReviews = await getReviewCount();
@@ -57,7 +58,7 @@ export const getReviewStats = async (req: Request, res: Response) => {
     }
 };
 
-export const getReviews = async (req: Request, res: Response) => {
+export const getReviews = async (req: VercelRequest | Request, res: VercelResponse | Response) => {
     try {
         const result = await getReviewSamples();
         res.status(200).json(result);
