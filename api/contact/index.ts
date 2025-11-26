@@ -1,10 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateSTL } from '../src/controllers/terrainController.ts';
+import { sendContactEmail } from '../../src/controllers/contactController.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'HTTP method not allowed' });
     }
 
-    return generateSTL(req, res);
+    return sendContactEmail(req, res);
 }
