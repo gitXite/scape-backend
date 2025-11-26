@@ -1,5 +1,5 @@
-import Review from '../models/Review';
-import Order from '../models/Order';
+import Review from '../models/Review.js';
+import Order from '../models/Order.js';
 
 
 export async function storeReview(rating: number, message: string, orderID: string) {

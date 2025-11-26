@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateSTL as generateSTLService } from '../services/terrainService';
-import type { STLParams } from '../types/index';
+import { generateSTL as generateSTLService } from '../services/terrainService.js';
+import type { STLParams } from '../types/index.js';
 
 
 export const generateSTL = async (req: VercelRequest | Request, res: VercelResponse | Response, next?: NextFunction) => {

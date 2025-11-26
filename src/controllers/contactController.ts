@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sendMail } from '../services/emailService';
-import { autoReply } from '../services/contactService';
-import { generateCaseID } from '../utils/generateCaseID';
+import { sendMail } from '../services/emailService.js';
+import { autoReply } from '../services/contactService.js';
+import { generateCaseID } from '../utils/generateCaseID.js';
 
 interface ContactBody {
     name: string;

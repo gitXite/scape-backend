@@ -1,6 +1,6 @@
 import type { STLParams } from '../types/index.ts';
-import config from '../config/config';
-import { ApiError } from '../utils/apiError';
+import config from '../config/config.js';
+import { ApiError } from '../utils/apiError.js';
 
 export const generateSTL = async (params: STLParams): Promise<Buffer> => {
     const { lat, lng, verticalScale, scale } = params;

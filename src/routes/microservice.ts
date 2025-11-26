@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { generateSTL } from '../controllers/terrainController';
+import { generateSTL } from '../controllers/terrainController.js';
 
 export const router = Router();
 
