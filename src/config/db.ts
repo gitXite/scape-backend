@@ -1,17 +1,22 @@
 import mongoose from 'mongoose';
 import config from '../config/config.js';
 
-
 async function connectDB() {
     const uri = config.mongoDBUri;
 
-    try {
-        await mongoose.connect(uri);
-        console.log('Connected to MongoDB Atlas with mongoose');
-    } catch (err) {
-        console.error("Error connecting to MongoDB: ", err);
-        throw err;
+    let cached = (global as any).mongoose;
+    if (!cached) {
+        cached = (global as any).mongoose = { conn: null, promise: null };
     }
+
+    if (cached.conn) return cached.conn;
+    
+    if (!cached.promise) {
+        cached.promise = mongoose.connect(uri).then((mongoose) => mongoose);
+    }
+
+    cached.conn = await cached.promise;
+    return cached.conn;
 }
 
 export default connectDB;
