@@ -1,11 +1,13 @@
 import type { NextFunction, Request, Response } from 'express';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { generateSTL as generateSTLService } from '../services/terrainService.ts';
 import type { STLParams } from '../types/index.ts';
 
 
-export const generateSTL = async (req: Request<{}, {}, STLParams>, res: Response, next: NextFunction) => {
+export const generateSTL = async (req: VercelRequest | Request, res: VercelResponse | Response, next?: NextFunction) => {
+    const body = req.body as STLParams;
     try {
-        const stlBuffer = await generateSTLService(req.body);
+        const stlBuffer = await generateSTLService(body);
 
         res.setHeader('Content-Type', 'application/sla');
         res.setHeader('Content-Disposition', 'attachment; filename="terrain.stl"');
@@ -14,6 +16,7 @@ export const generateSTL = async (req: Request<{}, {}, STLParams>, res: Response
         if (err.status === 429) {
             return res.status(429).json({ message: err.message });
         }
-        next(err);
+        res.status(500).json({ message: 'Internal server error' });
+        if (next) next(err);
     }
 }
