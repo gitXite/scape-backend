@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sendMail } from '../services/emailService.ts';
 import { autoReply } from '../services/contactService.ts';
 import { generateCaseID } from '../utils/generateCaseID.ts';
@@ -11,8 +12,8 @@ interface ContactBody {
     honey: string;
 }
 
-export const sendContactEmail = async (req: Request<{}, {}, ContactBody>, res: Response) => {
-    const { name, email, orderID, content, honey } = req.body;
+export const sendContactEmail = async (req: VercelRequest | Request, res: VercelResponse | Response) => {
+    const { name, email, orderID, content, honey } = req.body as ContactBody;
     if (!name || !email || !content) {
         return res.status(400).json({ message: 'Required fields must be filled out' });
     }
