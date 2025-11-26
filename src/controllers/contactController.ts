@@ -29,8 +29,8 @@ export const sendContactEmail = async (req: VercelRequest | Request, res: Vercel
             subject: `${name} - ${caseID} - ${orderID || 'null'}`,
             text: content,
         });
+        await autoReply(email, caseID);
         res.status(200).json({ message: 'Email sent successfully' });
-        autoReply(email, caseID);
     } catch (err) {
         res.status(500).json({ message: 'Failed to submit form, please try again', error: err });
     }
