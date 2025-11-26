@@ -1,7 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getReviews, submitReview } from '../../src/controllers/reviewController.ts';
+import enableCors from '../../src/utils/enableCors.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+    enableCors(res);
+    if (req.method === 'OPTIONS') return res.status(200).end;
     switch (req.method) {
         case 'POST':
             return submitReview(req, res);
