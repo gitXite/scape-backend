@@ -4,4 +4,5 @@ import config from '../config/config.js';
 export default function enableCors(res: VercelResponse, origin = config.frontendUrl) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
