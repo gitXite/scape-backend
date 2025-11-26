@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getReviews, submitReview } from '../../src/controllers/reviewController.ts';
-import enableCors from '../../src/utils/enableCors.ts';
+import { getReviews, submitReview } from '../controllers/reviewController.ts';
+import enableCors from '../utils/enableCors.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     enableCors(res);
