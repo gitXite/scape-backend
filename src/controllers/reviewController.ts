@@ -3,8 +3,8 @@ import {
     calculateAverageRating,
     getReviewCount,
     getReviewSamples,
-} from '../services/reviewService.js';
-import { checkOrder } from '../services/orderService.js';
+} from '../services/reviewService';
+import { checkOrder } from '../services/orderService';
 import type { Request, Response } from 'express';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 

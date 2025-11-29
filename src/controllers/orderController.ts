@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
-import { generateSTL } from '../services/terrainService.js';
-import { sendMail } from '../services/emailService.js';
+import { generateSTL } from '../services/terrainService';
+import { sendMail } from '../services/emailService';
 
 export const sendSTL = async (req: Request, res: Response, next: NextFunction) => {
     // maybe get the whole order request here with address and so forth

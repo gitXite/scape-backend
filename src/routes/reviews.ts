@@ -1,4 +1,4 @@
-import { submitReview, getReviewStats, getReviews } from '../controllers/reviewController.js';
+import { submitReview, getReviewStats, getReviews } from '../controllers/reviewController';
 import { Router } from 'express';
 
 export const router = Router();

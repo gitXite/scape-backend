@@ -1,4 +1,4 @@
-import { sendSTL } from '../controllers/orderController.js';
+import { sendSTL } from '../controllers/orderController';
 import { Router } from 'express';
 
 export const router = Router();

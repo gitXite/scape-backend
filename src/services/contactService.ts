@@ -1,4 +1,4 @@
-import { sendMail } from './emailService.js';
+import { sendMail } from './emailService';
 
 export const autoReply = async (replyTo: string, caseID: string) => {
     try {
