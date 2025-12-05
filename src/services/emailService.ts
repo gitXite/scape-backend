@@ -46,5 +46,6 @@ export async function sendMail(mailOptions: MailOptions) {
         } else {
             console.error(`Unknown email error: ${err}`);
         }
+        throw err;
     }
 }
