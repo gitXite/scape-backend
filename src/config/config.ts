@@ -9,6 +9,11 @@ export interface Config {
     terrainServiceUrl: string;
     frontendUrl: string;
     mongoDBUri: string;
+    vippsUrl: string;
+    vippsClientId: string;
+    vippsClientSecret: string;
+    vippsAPIMKey: string;
+    vippsMSN: string;
 }
 
 const config: Config = {
@@ -18,6 +23,11 @@ const config: Config = {
     terrainServiceUrl: process.env.TERRAIN_SERVICE_URL || '',
     frontendUrl: process.env.FRONTEND_URL || 'http://127.0.0.1:5173',
     mongoDBUri: process.env.MONGO_DB_URI || '',
+    vippsUrl: process.env.VIPPS_URL || '',
+    vippsClientId: process.env.VIPPS_CLIENT_ID || '',
+    vippsClientSecret: process.env.VIPPS_CLIENT_SECRET || '',
+    vippsAPIMKey: process.env.VIPPS_APIM_PRIMARY_KEY || '',
+    vippsMSN: process.env.VIPPS_MSN || '',
 };
 
 export default config;

@@ -7,6 +7,7 @@ import { router as microserviceRoutes }  from './routes/microservice';
 import { router as contactRoutes } from './routes/contact';
 import { router as reviewRoutes } from './routes/reviews';
 import { router as orderRoutes } from './routes/orders';
+import { router as vippsRoutes } from './routes/vipps';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -24,6 +25,7 @@ app.use('/api/stl', microserviceRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/order', orderRoutes);
+app.use('/api/checkout', vippsRoutes);
 
 app.use(errorHandler);
 
