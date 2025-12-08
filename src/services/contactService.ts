@@ -4,12 +4,12 @@ export const autoReply = async (replyTo: string, caseID: string) => {
     try {
         await sendMail({
             to: replyTo,
-            subject: `AUTOREPLY - ${caseID}`,
+            subject: `AUTOREPLY #${caseID}`,
             text: 'Thank you for reaching out to us! We will reply shortly.',
             template: 'autoReply',
             templateVars: {
                 'CURRENT_YEAR': `${new Date().getFullYear()}`,
-                'CASE_ID': caseID,
+                'CASE_ID': `#${caseID}`,
             },
         });
     } catch (err) {

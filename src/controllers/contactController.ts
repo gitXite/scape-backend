@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sendMail } from '../services/emailService';
 import { autoReply } from '../services/contactService';
-import { generateCaseID } from '../utils/generateCaseID';
+import { generateID } from '../utils/generateID';
 
 interface ContactBody {
     name: string;
@@ -21,12 +21,12 @@ export const sendContactEmail = async (req: VercelRequest | Request, res: Vercel
         return res.status(403).json({ message: 'Bot detected' });
     }
 
-    const caseID = generateCaseID();
+    const caseID = generateID();
     try {
         await sendMail({
             to: 'scapebymd@gmail.com',
             replyTo: email,
-            subject: `${name} - ${caseID} - ${orderID || 'null'}`,
+            subject: `${name} - #${caseID} - ${orderID || 'null'}`,
             text: content,
         });
         await autoReply(email, caseID);

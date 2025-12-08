@@ -5,7 +5,23 @@ const orderSchema = new Schema({
     orderID: {
         type: String,
         required: true,
+        unique: true,
     },
+    status: {
+        type: String,
+        default: "PENDING",
+    },
+    amount: {
+        type: Number,
+        required: true,
+    },
+    paymentReference: { type: String },
+
+    customerName: { type: String },
+    customerEmail: { type: String },
+    customerPhone: { type: String },
+    shippingAddress: { type: String },
+
     coordinates: {
         north: { type: Number, required: true },
         south: { type: Number, required: true },
@@ -28,7 +44,6 @@ const orderSchema = new Schema({
         type: String,
         required: true,
     },
-    // the rest from Vipps
 }, {
     timestamps: true,
 });
