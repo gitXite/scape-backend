@@ -24,15 +24,21 @@ export async function createOrder(
     frame: string,
     passepartout: string
 ): Promise<void> {
-    const order = await Order.create({
-        orderID: orderID,
-        amount: 576,
-        coordinates,
-        verticalScale,
-        scale,
-        frame,
-        passepartout,
-    });
+    const order = await Order.findOneAndUpdate(
+        { orderID },
+        {
+            $setOnInsert: {
+                orderID,
+                amount: 576,
+                coordinates,
+                verticalScale,
+                scale,
+                frame,
+                passepartout,
+            },
+        },
+        { upsert: true, new: true }
+    );
     console.log('Order created', order);
     return;
 }
@@ -47,7 +53,7 @@ export async function updateOrder(
     postalCode: string,
     city: string,
     shippingMethod: string,
-    paymentStatus: string,
+    paymentStatus: string
 ): Promise<void> {
     const filter = { orderID: reference };
     const order = await Order.updateOne(filter, {
@@ -61,7 +67,7 @@ export async function updateOrder(
             city: city,
             shippingMethod: shippingMethod,
             status: paymentStatus,
-        }
+        },
     });
     console.log('Order successfull', order);
     return;

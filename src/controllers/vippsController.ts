@@ -18,6 +18,7 @@ type RequestBody = {
     scale: number,
     frame: string,
     passepartout: string,
+    reference: string | null,
 };
 
 export async function createSession(
@@ -25,17 +26,17 @@ export async function createSession(
     res: Response | VercelResponse,
     next?: NextFunction
 ) {
-    const { coordinates, verticalScale, scale, frame, passepartout } = req.body as RequestBody;
+    const { coordinates, verticalScale, scale, frame, passepartout, reference } = req.body as RequestBody;
 
-    const orderId = generateOrderID();
-    // await createOrder(
-    //     orderId,
-    //     coordinates,
-    //     verticalScale,
-    //     scale,
-    //     frame,
-    //     passepartout
-    // );
+    const orderId = reference ? reference : generateOrderID();
+    await createOrder(
+        orderId,
+        coordinates,
+        verticalScale,
+        scale,
+        frame,
+        passepartout
+    );
 
     const response = await fetch(`${config.vippsUrl}/checkout/v3/session`, {
         headers: {
@@ -48,6 +49,7 @@ export async function createSession(
             'Vipps-System-Version': '1.0.0',
             'Vipps-System-Plugin-Name': 'custom',
             'Vipps-System-Plugin-Version': '1.0.0',
+            'Idempotency-Key': orderId,
         },
         method: 'POST',
         body: JSON.stringify({
@@ -90,7 +92,7 @@ export async function createSession(
             message: 'Something went wrong initializing vipps session',
         });
 
-    res.status(200).json(data);
+    res.status(200).json({ data, orderId });
 }
 
 export async function vippsCallback(
