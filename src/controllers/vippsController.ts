@@ -116,7 +116,6 @@ export async function vippsCallback(
     } = session.shippingDetails;
 
     if (session.sessionState === 'PaymentSuccessful') {
-        // update order in db
         await updateOrder(
             session.reference,
             firstName,
@@ -129,7 +128,29 @@ export async function vippsCallback(
             shippingMethod,
             session.sessionState
         );
+    } else if (session.sessionState === 'PaymentTerminated' || session.sessionState === 'SessionExpired') {
+        // delete temp record in db
     }
 
     res.status(200).json({ message: 'Order successfully placed' });
+}
+
+export async function checkCallback(req: Request | VercelRequest, res: Response | VercelResponse) {
+    const { reference } = req.query as { reference: string };
+    const response = await fetch(`${config.vippsUrl}/checkout/v3/session/${reference}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'client_id': config.vippsClientId,
+            'client_secret': config.vippsClientSecret,
+            'Ocp-Apim-Subscription-Key': config.vippsAPIMKey,
+            'Merchant-Serial-Number': config.vippsMSN,
+            'Vipps-System-Name': 'Scape by md',
+            'Vipps-System-Version': '1.0.0',
+            'Vipps-System-Plugin-Name': 'custom',
+            'Vipps-System-Plugin-Version': '1.0.0',
+            'Idempotency-Key': reference,
+        }
+    });
+    const { sessionState } = await response.json();
+    res.status(200).json(sessionState);
 }

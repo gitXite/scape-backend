@@ -30,6 +30,9 @@ export async function createOrder(
             $setOnInsert: {
                 orderID,
                 amount: 576,
+                
+            },
+            $set: {
                 coordinates,
                 verticalScale,
                 scale,
@@ -69,7 +72,7 @@ export async function updateOrder(
             status: paymentStatus,
         },
     });
-    console.log('Order successfull', order);
+    console.log('Order successful', order);
     return;
 }
 
