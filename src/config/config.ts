@@ -16,6 +16,7 @@ export interface Config {
     vippsMSN: string;
     vippsCallback: string;
     vippsCallbackToken: string;
+    backendUrl: string;
 }
 
 const config: Config = {
@@ -32,6 +33,7 @@ const config: Config = {
     vippsMSN: process.env.VIPPS_MSN || '',
     vippsCallback: process.env.VIPPS_CALLBACK_URL || '',
     vippsCallbackToken: process.env.VIPPS_CALLBACK_TOKEN || '',
+    backendUrl: process.env.BACKEND_URL || ''
 };
 
 export default config;

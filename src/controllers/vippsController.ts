@@ -5,7 +5,9 @@ import {
     generateOrderID,
     createOrder,
     updateOrder,
+    deleteOrder,
 } from '../services/orderService';
+import { sendMail } from '../services/emailService';
 
 type RequestBody = {
     coordinates: {
@@ -116,7 +118,7 @@ export async function vippsCallback(
     } = session.shippingDetails;
 
     if (session.sessionState === 'PaymentSuccessful') {
-        await updateOrder(
+        const order = await updateOrder(
             session.reference,
             firstName,
             lastName,
@@ -126,12 +128,33 @@ export async function vippsCallback(
             postalCode,
             city,
             shippingMethod,
-            session.sessionState
+            'PAID'
         );
+        const response = await fetch(`${config.backendUrl}/api/order/send`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        });
+        if (!response.ok) {
+            return res.status(400).json({ message: 'Failed to send STL'});
+        }
     } else if (session.sessionState === 'PaymentTerminated' || session.sessionState === 'SessionExpired') {
-        // delete temp record in db
+        await deleteOrder(session.reference);
     }
 
+    await sendMail({
+        to: email,
+        subject: `Order confirmation #${session.reference}`,
+        text: 'Order confirmed',
+        template: 'orderConfirmationEmail',
+        templateVars: {
+            'ORDER_ID': session.reference,
+            'CUSTOMER_NAME': firstName,
+            'CURRENT_YEAR': `${new Date().getFullYear()}`,
+        },
+    });
     res.status(200).json({ message: 'Order successfully placed' });
 }
 
@@ -152,5 +175,8 @@ export async function checkCallback(req: Request | VercelRequest, res: Response 
         }
     });
     const { sessionState } = await response.json();
+    if (sessionState === 'PaymentTerminated' || sessionState === 'SessionExpired') {
+        await deleteOrder(reference);
+    }
     res.status(200).json(sessionState);
 }

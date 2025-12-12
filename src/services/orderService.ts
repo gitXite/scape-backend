@@ -30,7 +30,6 @@ export async function createOrder(
             $setOnInsert: {
                 orderID,
                 amount: 576,
-                
             },
             $set: {
                 coordinates,
@@ -57,7 +56,7 @@ export async function updateOrder(
     city: string,
     shippingMethod: string,
     paymentStatus: string
-): Promise<void> {
+) {
     const filter = { orderID: reference };
     const order = await Order.updateOne(filter, {
         $set: {
@@ -73,6 +72,12 @@ export async function updateOrder(
         },
     });
     console.log('Order successful', order);
+    return order;
+}
+
+export async function deleteOrder(reference: string) {
+    await Order.findOneAndDelete({ orderID: reference });
+    console.log('Order deleted', reference);
     return;
 }
 
