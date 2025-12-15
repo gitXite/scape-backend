@@ -2,8 +2,9 @@ import { google } from 'googleapis';
 import { Readable } from 'stream';
 import Order from '../models/Order';
 import { generateID } from '../utils/generateID';
+import config from '../config/config';
 
-const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
+const credentials = JSON.parse(config.serviceAccount);
 
 const auth = new google.auth.JWT({
     email: credentials.client_email,

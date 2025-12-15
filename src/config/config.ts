@@ -17,6 +17,7 @@ export interface Config {
     vippsCallback: string;
     vippsCallbackToken: string;
     backendUrl: string;
+    serviceAccount: string;
 }
 
 const config: Config = {
@@ -33,7 +34,8 @@ const config: Config = {
     vippsMSN: process.env.VIPPS_MSN || '',
     vippsCallback: process.env.VIPPS_CALLBACK_URL || '',
     vippsCallbackToken: process.env.VIPPS_CALLBACK_TOKEN || '',
-    backendUrl: process.env.BACKEND_URL || ''
+    backendUrl: process.env.BACKEND_URL || '',
+    serviceAccount: process.env.GOOGLE_SERVICE_ACCOUNT || '',
 };
 
 export default config;
