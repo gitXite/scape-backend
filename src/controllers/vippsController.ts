@@ -63,7 +63,7 @@ export async function createSession(
             },
             'transaction': {
                 'amount': {
-                    'value': 49700,
+                    'value': 54700,
                     'currency': 'NOK',
                 },
                 'paymentDescription': 'Custom Scape', // Scape
@@ -75,7 +75,7 @@ export async function createSession(
                     {
                         'brand': 'POSTEN',
                         'amount': {
-                            'value': 7900,
+                            'value': 4900,
                             'currency': 'NOK',
                         },
                         'type': 'MAILBOX',
