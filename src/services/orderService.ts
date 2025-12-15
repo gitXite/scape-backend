@@ -1,5 +1,20 @@
+import { google } from 'googleapis';
+import fs from 'fs';
 import Order from '../models/Order';
 import { generateID } from '../utils/generateID';
+
+const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
+
+const auth = new google.auth.JWT({
+    email: credentials.client_email,
+    key: credentials.private_key,
+    scopes: ['https://www.googleapis.com/auth/drive.file'],
+});
+
+const drive = google.drive({
+    version: 'v3',
+    auth,
+});
 
 export function generateOrderID() {
     const now = new Date();
@@ -84,4 +99,27 @@ export async function deleteOrder(reference: string) {
 export async function checkOrder(orderID: string): Promise<boolean> {
     const order = await Order.findOne({ orderID }).exec();
     return !!order;
+}
+
+export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
+    const res = await drive.files.create({
+        requestBody: {
+            name: `${orderId}.zip`,
+            mimeType: 'application/zip',
+        },
+        media: {
+            mimeType: 'application/zip',
+            body: fs.createReadStream(`${orderId}.zip`),
+        },
+    });
+
+    const fileId = res.data.id;
+    await drive.permissions.create({
+        fileId,
+        requestBody: {
+            role: 'reader',
+            type: 'user',
+            emailAddress: 'scapebymd@gmail.no',
+        },
+    });
 }
