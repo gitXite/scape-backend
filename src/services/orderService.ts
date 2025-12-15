@@ -1,5 +1,5 @@
 import { google } from 'googleapis';
-import fs from 'fs';
+import { Readable } from 'stream';
 import Order from '../models/Order';
 import { generateID } from '../utils/generateID';
 
@@ -104,16 +104,18 @@ export async function checkOrder(orderID: string): Promise<boolean> {
 export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
     const res = await drive.files.create({
         requestBody: {
-            name: `${orderId}.zip`,
-            mimeType: 'application/zip',
+            name: `${orderId}.stl`,
+            mimeType: 'application/sla',
         },
         media: {
-            mimeType: 'application/zip',
-            body: fs.createReadStream(`${orderId}.zip`),
+            mimeType: 'application/sla',
+            body: Readable.from(stlBuffer),
         },
     });
 
     const fileId = res.data.id;
+    if (!fileId) return;
+
     await drive.permissions.create({
         fileId,
         requestBody: {
