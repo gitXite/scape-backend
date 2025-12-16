@@ -97,7 +97,7 @@ export async function createSession(
     res.status(200).json({ data, orderId });
 }
 
-async function processVippsCallback(session: any, res: VercelResponse) {
+async function processVippsCallback(session: any) {
     if (session.sessionState === 'PaymentSuccessful') {
         const {
             firstName,
