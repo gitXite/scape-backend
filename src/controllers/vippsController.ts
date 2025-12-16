@@ -103,7 +103,7 @@ export async function vippsCallback(
     next?: NextFunction
 ) {
     if (req.headers.authorization !== `Bearer ${config.vippsCallbackToken}`)
-        return res.status(401).end;
+        return res.status(401).end();
 
     const session = req.body;
     const {
