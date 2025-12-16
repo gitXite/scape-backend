@@ -97,27 +97,19 @@ export async function createSession(
     res.status(200).json({ data, orderId });
 }
 
-export async function vippsCallback(
-    req: Request | VercelRequest,
-    res: Response | VercelResponse,
-    next?: NextFunction
-) {
-    if (req.headers.authorization !== `Bearer ${config.vippsCallbackToken}`)
-        return res.status(401).end();
-
-    const session = req.body;
-    const {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        streetAddress,
-        postalCode,
-        city,
-        shippingMethod,
-    } = session.shippingDetails;
-
+async function processVippsCallback(session: any, res: VercelResponse) {
     if (session.sessionState === 'PaymentSuccessful') {
+        const {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            streetAddress,
+            postalCode,
+            city,
+            shippingMethod,
+        } = session.shippingDetails;
+
         const order = await updateOrder(
             session.reference,
             firstName,
@@ -130,6 +122,7 @@ export async function vippsCallback(
             shippingMethod,
             'PAID'
         );
+
         const response = await fetch(`${config.backendUrl}/api/order/send`, {
             method: 'POST',
             headers: {
@@ -138,25 +131,44 @@ export async function vippsCallback(
             body: JSON.stringify(order)
         });
         if (!response.ok) {
-            return res.status(400).json({ message: 'Failed to send STL'});
+            return; // res.status(400).json({ message: 'Failed to send STL'});
         }
+
+        await sendMail({
+            to: email,
+            subject: `Order confirmation #${session.reference}`,
+            text: 'Order confirmed',
+            template: 'orderConfirmationEmail',
+            templateVars: {
+                'ORDER_ID': session.reference,
+                'CUSTOMER_NAME': firstName,
+                'CURRENT_YEAR': `${new Date().getFullYear()}`,
+            },
+        });
     } else if (session.sessionState === 'PaymentTerminated' || session.sessionState === 'SessionExpired') {
         await deleteOrder(session.reference);
-        return res.status(408).json({ message: 'Checkout cancelled' });
+    }
+}
+
+export async function vippsCallback(
+    req: Request | VercelRequest,
+    res: Response | VercelResponse,
+    next?: NextFunction
+) {
+    if (req.headers.authorization !== `Bearer ${config.vippsCallbackToken}`)
+        return res.status(401).end();
+
+    const session = req.body;
+
+    if (session.sessionState === 'PaymentSuccessful') {
+        res.status(200).json({ message: 'Order successfully placed', ok: true });
+    } else if (session.sessionState === 'PaymentTerminated' || session.sessionState === 'SessionExpired') {
+        res.status(408).json({ message: 'Checkout cancelled' });
     }
 
-    await sendMail({
-        to: email,
-        subject: `Order confirmation #${session.reference}`,
-        text: 'Order confirmed',
-        template: 'orderConfirmationEmail',
-        templateVars: {
-            'ORDER_ID': session.reference,
-            'CUSTOMER_NAME': firstName,
-            'CURRENT_YEAR': `${new Date().getFullYear()}`,
-        },
+    processVippsCallback(session).catch(err => {
+        console.error('Processing Vipps callback failed', err);
     });
-    res.status(200).json({ message: 'Order successfully placed' });
 }
 
 export async function checkCallback(req: Request | VercelRequest, res: Response | VercelResponse) {
