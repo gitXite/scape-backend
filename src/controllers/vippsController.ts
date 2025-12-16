@@ -98,6 +98,7 @@ export async function createSession(
 }
 
 async function processVippsCallback(session: any) {
+    // make this idempotent
     if (session.sessionState === 'PaymentSuccessful') {
         const {
             firstName,
@@ -131,7 +132,7 @@ async function processVippsCallback(session: any) {
             body: JSON.stringify(order)
         });
         if (!response.ok) {
-            return; // res.status(400).json({ message: 'Failed to send STL'});
+            return;
         }
 
         await sendMail({
@@ -161,15 +162,13 @@ export async function vippsCallback(
 
     const session = req.body;
 
-    if (session.sessionState === 'PaymentSuccessful') {
-        res.status(200).json({ message: 'Order successfully placed', ok: true });
-    } else if (session.sessionState === 'PaymentTerminated' || session.sessionState === 'SessionExpired') {
-        res.status(408).json({ message: 'Checkout cancelled' });
+    try {
+        await processVippsCallback(session);
+    } catch (err) {
+        console.error('Processing Vipps callback failed', err);
     }
 
-    processVippsCallback(session).catch(err => {
-        console.error('Processing Vipps callback failed', err);
-    });
+    return res.status(200).json({ ok: true });
 }
 
 export async function checkCallback(req: Request | VercelRequest, res: Response | VercelResponse) {
