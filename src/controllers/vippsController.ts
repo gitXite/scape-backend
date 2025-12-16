@@ -155,13 +155,7 @@ export async function vippsCallback(
     res: Response | VercelResponse,
     next?: NextFunction
 ) {
-    const auth = req.headers.authorization;
-    if (!auth) {
-        console.error('Missing Authorization header', req.headers);
-        return res.status(401).end();
-    }
-    console.log('Headers', req.headers);
-    if (auth !== `Bearer ${config.vippsCallbackToken}`) {
+    if (req.headers.authorization !== config.vippsCallbackToken) {
         return res.status(401).end();
     }
 
