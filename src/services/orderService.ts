@@ -45,7 +45,7 @@ export async function createOrder(
         {
             $setOnInsert: {
                 orderID,
-                amount: 576,
+                amount: 596,
             },
             $set: {
                 coordinates,
