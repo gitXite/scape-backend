@@ -1,4 +1,4 @@
-import { google } from 'googleapis';
+import drive from '@googleapis/drive';
 import { Readable } from 'stream';
 import Order from '../models/Order';
 import { generateID } from '../utils/generateID';
@@ -6,13 +6,13 @@ import config from '../config/config';
 
 const credentials = JSON.parse(config.serviceAccount);
 
-const auth = new google.auth.JWT({
+const auth = new drive.auth.JWT({
     email: credentials.client_email,
     key: credentials.private_key,
     scopes: ['https://www.googleapis.com/auth/drive.file'],
 });
 
-const drive = google.drive({
+const client = drive.drive({
     version: 'v3',
     auth,
 });
@@ -103,7 +103,7 @@ export async function checkOrder(orderID: string): Promise<boolean> {
 }
 
 export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
-    const res = await drive.files.create({
+    const res = await client.files.create({
         requestBody: {
             name: `${orderId}.stl`,
             mimeType: 'application/sla',
@@ -117,7 +117,7 @@ export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
     const fileId = res.data.id;
     if (!fileId) return;
 
-    await drive.permissions.create({
+    await client.permissions.create({
         fileId,
         requestBody: {
             role: 'reader',

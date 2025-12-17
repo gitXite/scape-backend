@@ -35,10 +35,10 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@googleapis/drive": "^20.0.0",
     "@types/nodemailer": "^7.0.3",
     "@vercel/node": "^5.5.12",
     "cors": "^2.8.5",
-    "googleapis": "^168.0.0",
     "mongoose": "^8.19.3",
     "nodemailer": "^7.0.10"
   }
