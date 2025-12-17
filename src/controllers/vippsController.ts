@@ -134,7 +134,7 @@ async function processVippsCallback(session: any) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                orderID: session.reference,
+                orderId: session.reference,
                 coordinates: order.coordinates,
                 verticalScale: order.verticalScale,
                 scale: order.scale,
