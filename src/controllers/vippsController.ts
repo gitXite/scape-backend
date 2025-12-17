@@ -6,8 +6,10 @@ import {
     createOrder,
     updateOrder,
     deleteOrder,
+    checkOrder,
 } from '../services/orderService';
 import { sendMail } from '../services/emailService';
+// import { Order } from '../types';
 
 type RequestBody = {
     coordinates: {
@@ -98,7 +100,9 @@ export async function createSession(
 }
 
 async function processVippsCallback(session: any) {
-    // make this idempotent
+    const { order } = await checkOrder(session.reference);
+    if (order.status === 'PAID') return;
+
     if (session.sessionState === 'PaymentSuccessful') {
         const {
             firstName,
@@ -111,7 +115,7 @@ async function processVippsCallback(session: any) {
             shippingMethod,
         } = session.shippingDetails;
 
-        const order = await updateOrder(
+        await updateOrder(
             session.reference,
             firstName,
             lastName,
@@ -129,7 +133,21 @@ async function processVippsCallback(session: any) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(order)
+            body: JSON.stringify({
+                orderID: session.reference,
+                coordinates: order.coordinates,
+                verticalScale: order.verticalScale,
+                scale: order.scale,
+                frame: order.frame,
+                passepartout: order.passepartout,
+                customerFirstName: firstName,
+                customerLastName: lastName,
+                customerEmail: email,
+                customerPhone: phoneNumber,
+                shippingAddress: streetAddress,
+                postalCode,
+                city
+            })
         });
         if (!response.ok) {
             return;

@@ -2,36 +2,12 @@ import type { NextFunction, Request, Response } from 'express';
 import { generateSTL } from '../services/terrainService';
 import { sendMail } from '../services/emailService';
 import { uploadToDrive } from '../services/orderService';
-
-interface Order {
-    orderId: string;
-    status?: string;
-    amount?: number;
-
-    customerFirstName: string;
-    customerLastName: string;
-    customerEmail: string;
-    customerPhone: string;
-    shippingAddress: string;
-    postalCode: string;
-    city: string;
-    shippingMethod: string;
-
-    coordinates: {
-        north: number;
-        south: number;
-        east: number;
-        west: number;
-    };
-    verticalScale: number;
-    scale: number;
-    frame: string;
-    passepartout: string;
-}
+import { Order } from '../types';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 export const sendSTL = async (
-    req: Request,
-    res: Response,
+    req: Request | VercelRequest,
+    res: Response | VercelResponse,
     next: NextFunction
 ) => {
     const order = req.body as Order;
@@ -47,7 +23,8 @@ export const sendSTL = async (
         !order.customerEmail ||
         !order.customerPhone ||
         !order.shippingAddress ||
-        !order.postalCode
+        !order.postalCode || 
+        !order.city
     ) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
@@ -105,7 +82,7 @@ export const sendSTL = async (
             });
         }
 
-        res.status(200).end;
+        res.status(200).end();
     } catch (err: any) {
         if (err.status === 429) {
             return res.status(429).json({ message: err.message });

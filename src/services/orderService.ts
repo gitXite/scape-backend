@@ -1,4 +1,5 @@
-import drive from '@googleapis/drive';
+import { drive_v3 } from '@googleapis/drive';
+import { JWT } from 'google-auth-library';
 import { Readable } from 'stream';
 import Order from '../models/Order';
 import { generateID } from '../utils/generateID';
@@ -6,14 +7,13 @@ import config from '../config/config';
 
 const credentials = JSON.parse(config.serviceAccount);
 
-const auth = new drive.auth.JWT({
+const auth = new JWT({
     email: credentials.client_email,
     key: credentials.private_key,
-    scopes: ['https://www.googleapis.com/auth/drive.file'],
+    scopes: ['https://www.googleapis.com/auth/drive'],
 });
 
-const client = drive.drive({
-    version: 'v3',
+const client = new drive_v3.Drive({
     auth,
 });
 
@@ -97,16 +97,24 @@ export async function deleteOrder(reference: string) {
     return;
 }
 
-export async function checkOrder(orderID: string): Promise<boolean> {
+interface CheckOrder {
+    check: boolean;
+    order: any;
+}
+
+export async function checkOrder(orderID: string): Promise<CheckOrder> {
     const order = await Order.findOne({ orderID }).exec();
-    return !!order;
+    const check = !!order;
+    return { check, order };
 }
 
 export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
     const res = await client.files.create({
+        supportsAllDrives: true,
+        fields: 'id, name, webViewLink',
         requestBody: {
             name: `${orderId}.stl`,
-            mimeType: 'application/sla',
+            parents: [config.sharedDriveId],
         },
         media: {
             mimeType: 'application/sla',
@@ -114,15 +122,15 @@ export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
         },
     });
 
-    const fileId = res.data.id;
-    if (!fileId) return;
+    // const fileId = res.data.id;
+    // if (!fileId) return;
 
-    await client.permissions.create({
-        fileId,
-        requestBody: {
-            role: 'reader',
-            type: 'user',
-            emailAddress: 'scapebymd@gmail.no',
-        },
-    });
+    // await client.permissions.create({
+    //     fileId,
+    //     requestBody: {
+    //         role: 'reader',
+    //         type: 'user',
+    //         emailAddress: 'scapebymd@gmail.no',
+    //     },
+    // });
 }

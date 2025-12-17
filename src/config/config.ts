@@ -18,6 +18,7 @@ export interface Config {
     vippsCallbackToken: string;
     backendUrl: string;
     serviceAccount: string;
+    sharedDriveId: string;
 }
 
 const config: Config = {
@@ -36,6 +37,7 @@ const config: Config = {
     vippsCallbackToken: process.env.VIPPS_CALLBACK_TOKEN || '',
     backendUrl: process.env.BACKEND_URL || '',
     serviceAccount: process.env.GOOGLE_SERVICE_ACCOUNT || '',
+    sharedDriveId: process.env.SHARED_DRIVE || '',
 };
 
 export default config;

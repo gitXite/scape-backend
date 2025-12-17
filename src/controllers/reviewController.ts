@@ -22,8 +22,8 @@ export const submitReview = async (
     if (rating == null || !orderID) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
-    const orderExists = await checkOrder(orderID);
-    if (!orderExists) {
+    const { check } = await checkOrder(orderID);
+    if (!check) {
         return res.status(404).json({ message: 'Order ID not found' });
     }
 
