@@ -22,9 +22,11 @@ export const submitReview = async (
     if (rating == null || !orderID) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
-    const { check } = await checkOrder(orderID);
+    const { check, order } = await checkOrder(orderID);
     if (!check) {
         return res.status(404).json({ message: 'Order ID not found' });
+    } else if (order.status !== 'PAID') {
+        return res.status(401).json({ message: 'Order not completed, proceed with payment' });
     }
 
     try {

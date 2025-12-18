@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { generateSTL } from '../services/terrainService';
 import { sendMail } from '../services/emailService';
-import { uploadToDrive } from '../services/orderService';
+import { checkOrder, uploadToDrive } from '../services/orderService';
 import { Order } from '../types';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
@@ -28,6 +28,9 @@ export const sendSTL = async (
     ) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
+    const dbOrder = await checkOrder(order.orderId);
+    if (!dbOrder.check) return;
+    if (order.status !== 'PAID') return;
 
     try {
         const stlBuffer = await generateSTL({ lat: order.coordinates.north, lng: order.coordinates.west, verticalScale: order.verticalScale, scale: order.scale });
