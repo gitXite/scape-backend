@@ -109,6 +109,8 @@ export async function checkOrder(orderID: string): Promise<CheckOrder> {
 }
 
 export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
+    console.log('Uploading to drive...');
+
     const res = await client.files.create({
         supportsAllDrives: true,
         fields: 'id, name, webViewLink',
@@ -122,15 +124,7 @@ export async function uploadToDrive(stlBuffer: Buffer, orderId: string) {
         },
     });
 
-    // const fileId = res.data.id;
-    // if (!fileId) return;
-
-    // await client.permissions.create({
-    //     fileId,
-    //     requestBody: {
-    //         role: 'reader',
-    //         type: 'user',
-    //         emailAddress: 'scapebymd@gmail.no',
-    //     },
-    // });
+    if (res) {
+        console.log('Upload completed');
+    }
 }

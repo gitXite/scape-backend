@@ -29,8 +29,8 @@ export const sendSTL = async (
         return res.status(400).json({ message: 'Missing required fields' });
     }
     const dbOrder = await checkOrder(order.orderId);
-    if (!dbOrder.check) return;
-    if (order.status !== 'PAID') return;
+    if (!dbOrder.check) return res.status(404).json({ message: 'Order not found' });
+    if (dbOrder.order.status !== 'PAID') return res.status(400).json({ message: 'Order not paid' });
 
     try {
         const stlBuffer = await generateSTL({ lat: order.coordinates.north, lng: order.coordinates.west, verticalScale: order.verticalScale, scale: order.scale });
