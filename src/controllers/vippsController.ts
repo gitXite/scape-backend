@@ -207,25 +207,6 @@ export async function checkCallback(req: Request | VercelRequest, res: Response 
     });
     const session = await response.json();
     const { sessionState } = session;
-    // if (sessionState === 'PaymentSuccessful') {
-    //    const {
-    //        firstName,
-    //        lastName,
-    //       email,
-    //        phoneNumber,
-    //        streetAddress,
-    //        postalCode,
-    //        city,
-    //        shippingMethod,
-    //    } = session.shippingDetails;
-
-        // send stl mail and confirmation if not duplicate
-        // 
-    //    console.log('Polling endpoint hit, check for duplicate');
-    //    return res.status(200).json({ message: 'Polling endpoint hit, check for duplicate' });
-    // } else if (sessionState === 'PaymentTerminated' || sessionState === 'SessionExpired') {
-    //    await deleteOrder(reference);
-    //    return res.status(408).json({ message: 'Checkout cancelled' });
-    // }
+    
     res.status(200).json(sessionState);
 }
