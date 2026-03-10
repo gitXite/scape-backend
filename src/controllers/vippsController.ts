@@ -18,7 +18,7 @@ type RequestBody = {
         east: number,
         west: number,
     },
-    verticalScale: number,
+    zScale: number,
     scale: number,
     frame: string,
     passepartout: string,
@@ -30,13 +30,13 @@ export async function createSession(
     res: Response | VercelResponse,
     next?: NextFunction
 ) {
-    const { coordinates, verticalScale, scale, frame, passepartout, reference } = req.body as RequestBody;
+    const { coordinates, zScale, scale, frame, passepartout, reference } = req.body as RequestBody;
 
     const orderId = reference ? reference : generateOrderID();
     await createOrder(
         orderId,
         coordinates,
-        verticalScale,
+        zScale,
         scale,
         frame,
         passepartout
@@ -136,7 +136,7 @@ async function processVippsCallback(session: any) {
             body: JSON.stringify({
                 orderId: session.reference,
                 coordinates: order.coordinates,
-                verticalScale: order.verticalScale,
+                zScale: order.zScale,
                 scale: order.scale,
                 frame: order.frame,
                 passepartout: order.passepartout,

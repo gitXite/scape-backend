@@ -14,7 +14,7 @@ export const sendSTL = async (
     if (
         !order.orderId ||
         !order.coordinates ||
-        !order.verticalScale ||
+        !order.zScale ||
         !order.scale ||
         !order.frame ||
         !order.passepartout ||
@@ -33,7 +33,7 @@ export const sendSTL = async (
     if (dbOrder.order.status !== 'PAID') return res.status(400).json({ message: 'Order not paid' });
 
     try {
-        const stlBuffer = await generateSTL({ lat: order.coordinates.north, lng: order.coordinates.west, verticalScale: order.verticalScale, scale: order.scale });
+        const stlBuffer = await generateSTL({ nwLat: order.coordinates.north, nwLng: order.coordinates.west, seLat: order.coordinates.south, seLng: order.coordinates.east, zScale: order.zScale });
 
         // check if buffersize is close to gmails limit of 25MB including base64 overhead
         // upload to google drive instead
