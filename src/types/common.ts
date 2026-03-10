@@ -1,8 +1,9 @@
 export type STLParams = {
-    lat: number,
-    lng: number,
-    verticalScale: number,
-    scale: number,
+    nwLat: number,
+    nwLng: number,
+    seLat: number,
+    seLng: number,
+    zScale: number,
 };
 
 export interface Order {
@@ -25,7 +26,7 @@ export interface Order {
         east: number;
         west: number;
     };
-    verticalScale: number;
+    zScale: number;
     scale: number;
     frame: string;
     passepartout: string;

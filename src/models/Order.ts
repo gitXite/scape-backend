@@ -37,7 +37,7 @@ const orderSchema = new Schema(
             type: Number,
             required: true,
         },
-        verticalScale: {
+        zScale: {
             type: Number,
             required: true,
         },

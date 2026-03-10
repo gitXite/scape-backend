@@ -3,7 +3,7 @@ import config from '../config/config';
 import { ApiError } from '../utils/apiError';
 
 export const generateSTL = async (params: STLParams): Promise<Buffer> => {
-    const { lat, lng, verticalScale, scale } = params;
+    const { nwLat, nwLng, seLat, seLng, zScale } = params;
 
     const response = await fetch(`${config.terrainServiceUrl}/generate`, {
         method: 'POST',
@@ -12,10 +12,11 @@ export const generateSTL = async (params: STLParams): Promise<Buffer> => {
             'X-Api-Key': config.terrainApiKey,
         },
         body: JSON.stringify({
-            lat,
-            lng,
-            verticalScale,
-            scale,
+            nwLat,
+            nwLng,
+            seLat,
+            seLng,
+            zScale,
         }),
     });
 

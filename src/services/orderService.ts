@@ -35,7 +35,7 @@ export async function createOrder(
         east: number;
         west: number;
     },
-    verticalScale: number,
+    zScale: number,
     scale: number,
     frame: string,
     passepartout: string
@@ -49,7 +49,7 @@ export async function createOrder(
             },
             $set: {
                 coordinates,
-                verticalScale,
+                zScale,
                 scale,
                 frame,
                 passepartout,
