@@ -161,6 +161,8 @@ async function processVippsCallback(session: any) {
             templateVars: {
                 'ORDER_ID': session.reference,
                 'CUSTOMER_NAME': firstName,
+                'FRAME': order.frame,
+                'PASSEPARTOUT': order.passepartout,
                 'CURRENT_YEAR': `${new Date().getFullYear()}`,
             },
         });
