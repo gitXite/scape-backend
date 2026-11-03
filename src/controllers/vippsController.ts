@@ -59,7 +59,7 @@ export async function createSession(
         body: JSON.stringify({
             'merchantInfo': {
                 'callbackUrl': config.vippsCallback, // endpoint for webhook
-                'returnUrl': 'https://scapebymd.no/', // website url for showing success or failure
+                'returnUrl': 'https://scapebymd.no/order-confirmation', // website url for showing success or failure
                 'callbackAuthorizationToken': config.vippsCallbackToken,
                 'termsAndConditionsUrl': 'https://scapebymd.no/terms-of-service',
             },
